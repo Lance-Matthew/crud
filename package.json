@@ -1,0 +1,29 @@
+{
+  "name": "crud",
+  "version": "1.0.0",
+  "description": "activity",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lance-Matthew/api-activity.git"
+  },
+  "author": "lev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lance-Matthew/api-activity/issues"
+  },
+  "homepage": "https://github.com/Lance-Matthew/api-activity#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
