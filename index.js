@@ -29,11 +29,3 @@ mongoose
   .catch((error) => console.log(error));
 
   app.use("/api", route);
-
-  async function handler(req, method){
-      if(method === "GET"){
-        if (path === "/testing"){
-          return "Testing route";
-        }
-      }
-  }
