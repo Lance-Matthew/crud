@@ -18,7 +18,6 @@ const PORT = process.env.PORT || 5000;
 
 
 const MONGOURL = process.env.MONGO_URL;
-
 mongoose
   .connect(MONGOURL)
   .then(() => {
@@ -29,4 +28,12 @@ mongoose
   })
   .catch((error) => console.log(error));
 
-  app.use("/api/user", route);
+  app.use("/api", route);
+
+  async function handler(req, method){
+      if(method === "GET"){
+        if (path === "/testing"){
+          return "Testing route";
+        }
+      }
+  }
