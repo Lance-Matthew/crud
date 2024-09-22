@@ -1,23 +1,65 @@
 import User from "../model/userModel.js";
 
 export const create = async(req, res)=>{
+
     try {
-        // Create a new User instance with the request body
-        const userData = new User( req.body);
-        const {firstName} = userData;
-        // Check if a user with the same email already exists
-        const userExist = await User.findOne({firstName})
-        if (userExist){
-            return res.status(400).json({message : "User already exists."})
+        // Destructure fields from the request body
+        const { firstname, lastname, course, year, enrolled } = req.body;
+
+        // Check if all required fields are provided
+        if (!firstname || !lastname || !course || !year) {
+            return res.status(400).json({
+                message: "All fields (firstname, lastname, course, and year) are required.",
+            });
         }
-        // Save the new user data into the database 
-        const savedUser = await userData.save();
-        // Send a success response with the saved user data
-        res.status(200).json(savedUser)
+
+        // Create a new student object
+        const student = new Student({
+            firstname,
+            lastname,
+            course,
+            year,
+            enrolled: enrolled || false // Default to false if not provided
+        });
+
+        // Save the student to the database
+        const savedStudent = await student.save();
+
+        // Return success response
+        res.status(201).json(savedStudent);
+
     } catch (error) {
-        // Handle any errors and send an internal server error response
-        res.status(500).json({error : "Internal Server Error. "})
+        // Handle validation errors
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({
+                message: `Validation failed: ${Object.values(error.errors).map(e => e.message).join(', ')}`,
+            });
+        }
+
+        // Handle other possible errors
+        res.status(500).json({
+            message: "Server error",
+            error: error.message,
+        });
     }
+    
+    // try {
+    //     // Create a new User instance with the request body
+    //     const userData = new User( req.body);
+    //     const {firstName} = userData;
+    //     // Check if a user with the same email already exists
+    //     const userExist = await User.findOne({firstName})
+    //     if (userExist){
+    //         return res.status(400).json({message : "User already exists."})
+    //     }
+    //     // Save the new user data into the database 
+    //     const savedUser = await userData.save();
+    //     // Send a success response with the saved user data
+    //     res.status(200).json(savedUser)
+    // } catch (error) {
+    //     // Handle any errors and send an internal server error response
+    //     res.status(500).json({error : "Internal Server Error. "})
+    // }
 }
 
 export const fetch = async (req, res)=>{
