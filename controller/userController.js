@@ -6,14 +6,14 @@ export const create = async(req, res)=>{
         // Destructure fields from the request body
         const { firstname, lastname, course, year, enrolled } = req.body;
 
-        // Check if all required fields are provided
+        // Check if all required fields are present
         if (!firstname || !lastname || !course || !year) {
             return res.status(400).json({
-                message: "All fields (firstname, lastname, course, and year) are required.",
+                message: "All fields (firstname, lastname, course, and year) are required."
             });
         }
 
-        // Create a new student object
+        // Create a new Student object
         const student = new Student({
             firstname,
             lastname,
@@ -29,20 +29,19 @@ export const create = async(req, res)=>{
         res.status(201).json(savedStudent);
 
     } catch (error) {
-        // Handle validation errors
         if (error.name === 'ValidationError') {
+            // Mongoose validation error response
             return res.status(400).json({
-                message: `Validation failed: ${Object.values(error.errors).map(e => e.message).join(', ')}`,
+                message: `Student validation failed: ${Object.values(error.errors).map(e => e.message).join(', ')}`
             });
         }
 
-        // Handle other possible errors
+        // Other error handling
         res.status(500).json({
-            message: "Server error",
-            error: error.message,
+            message: 'Server error',
+            error: error.message
         });
     }
-    
     // try {
     //     // Create a new User instance with the request body
     //     const userData = new User( req.body);
