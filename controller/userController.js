@@ -5,18 +5,18 @@ export const create = async (req, res) => {
         // Extract fields from the request body
         const { firstname, lastname, course, year, enrolled } = req.body;
 
-        // Validate that all required fields are present
-        if (!firstname || !lastname || !course || !year) {
-            return res.status(400).json({
-                message: "All fields (firstname, lastname, course, and year) are required."
-            });
-        }
+        // // Validate that all required fields are present
+        // if (!firstname || !lastname || !course || !year) {
+        //     return res.status(400).json({
+        //         message: "All fields (firstname, lastname, course, and year) are required."
+        //     });
+        // }
 
-        // Check if a user with the same firstName already exists
-        const userExist = await User.findOne({ firstname });
-        if (userExist) {
-            return res.status(400).json({ message: "User already exists." });
-        }
+        // // Check if a user with the same firstName already exists
+        // const userExist = await User.findOne({ firstname });
+        // if (userExist) {
+        //     return res.status(400).json({ message: "User already exists." });
+        // }
 
         // Create a new User instance with the request body
         const userData = new User({
