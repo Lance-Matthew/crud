@@ -1,64 +1,25 @@
 import User from "../model/userModel.js";
 
-export const create = async (req, res) => {
+
+export const create = async(req, res)=>{
     try {
-        // Extract fields from the request body
-        const { firstname, lastname, course, year, enrolled } = req.body;
-
-        // // Validate that all required fields are present
-        // if (!firstname || !lastname || !course || !year) {
-        //     return res.status(400).json({
-        //         message: "All fields (firstname, lastname, course, and year) are required."
-        //     });
-        // }
-
-        // // Check if a user with the same firstName already exists
-        // const userExist = await User.findOne({ firstname });
-        // if (userExist) {
-        //     return res.status(400).json({ message: "User already exists." });
-        // }
-
         // Create a new User instance with the request body
-        const userData = new User({
-            firstname,
-            lastname,
-            course,
-            year,
-            enrolled: enrolled || false  // Default to false if not provided
-        });
-
-        // Save the new user data into the database
+        const userData = new User( req.body);
+        const {firstName} = userData;
+        // // Check if a user with the same email already exists
+        // const userExist = await User.findOne({firstName})
+        // if (userExist){
+        //     return res.status(400).json({message : "User already exists."})
+        // }
+        // Save the new user data into the database 
         const savedUser = await userData.save();
-
         // Send a success response with the saved user data
-        res.status(200).json(savedUser);
-
+        res.status(200).json(savedUser)
     } catch (error) {
         // Handle any errors and send an internal server error response
-        res.status(500).json({ error: "Internal Server Error." });
+        res.status(500).json({error : "Internal Server Error. "})
     }
-};
-
-// export const create = async(req, res)=>{
-
-//     try {
-//         // Create a new User instance with the request body
-//         const userData = new User( req.body);
-//         const {firstName} = userData;
-//         // Check if a user with the same email already exists
-//         const userExist = await User.findOne({firstName})
-//         if (userExist){
-//             return res.status(400).json({message : "User already exists."})
-//         }
-//         // Save the new user data into the database 
-//         const savedUser = await userData.save();
-//         // Send a success response with the saved user data
-//         res.status(200).json(savedUser)
-//     } catch (error) {
-//         // Handle any errors and send an internal server error response
-//         res.status(500).json({error : "Internal Server Error. "})
-//     }
-// }
+}
 
 export const fetch = async (req, res)=>{
     try {
